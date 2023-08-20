@@ -78,9 +78,9 @@ app.use(
   }).single("image")
 );
 
-app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("/pages", pagesRoutes);
-app.use("/users", usersRoutes);
+app.use("/api/images", express.static(path.join(__dirname, "images")));
+app.use("/api/pages", pagesRoutes);
+app.use("/api/users", usersRoutes);
 
 // Error Handling
 app.use((err, req, res, next) => {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev -p $PORT",
+    "dev": "echo $NODE_ENV && NODE_ENV=development next dev -p $PORT",
     "build": "next build",
     "start": "next start -p $PORT",
     "heroku-postbuild": "npm run build"
@@ -24,5 +24,8 @@
     "sass": "^1.26.10",
     "typeface-nunito-sans": "0.0.72",
     "typeface-roboto": "0.0.75"
+  },
+  "devDependencies": {
+    "cypress": "^12.17.4"
   }
 }

@@ -1,0 +1,69 @@
+version: "3"
+name: "notion"
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: "./Dockerfile"
+      args:
+        NODE_ENV: development
+    image: "notion-web"
+    container_name: frontend
+    env_file:
+      - './frontend/.env.local'
+    depends_on:
+      - backend
+    ports:
+      - 8002:8002
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - notion
+    
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: "./Dockerfile"
+    image: "notion-api"
+    container_name: backend
+    env_file:
+      - './backend/.env'
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - notion
+    
+  mongodb:
+    image: "mongo:latest"
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=notion
+      - MONGO_INITDB_ROOT_PASSWORD=mango-notion
+    volumes: 
+      - mongodb:/data/db
+    networks:
+      - notion
+    
+  nginx:
+    image: "nginx:latest"
+    container_name: nginx
+    ports:
+      - 8003:80
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - notion
+    depends_on:
+      - backend
+      - frontend
+networks:
+  notion:
+    driver: bridge
+    name: notion
+volumes:
+  mongodb:
