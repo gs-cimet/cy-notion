@@ -44,12 +44,12 @@ const signup = async (req, res, next) => {
     });
     const savedUser = await user.save();
 
-    await transport.sendMail({
-      from: process.env.MAIL_SENDER,
-      to: savedUser.email,
-      subject: "Confirm Your Email Address",
-      html: emailConfirmationTemplate(savedUser.activationToken),
-    });
+    // await transport.sendMail({
+    //   from: process.env.MAIL_SENDER,
+    //   to: savedUser.email,
+    //   subject: "Confirm Your Email Address",
+    //   html: emailConfirmationTemplate(savedUser.activationToken),
+    // });
 
     // Automatically log in user after registration
     const token = jwt.sign(

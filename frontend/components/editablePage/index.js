@@ -29,15 +29,6 @@ import { objectId, setCaretToEnd } from "../../utils";
 // ]
 
 const EditablePage = ({ id, fetchedBlocks, err }) => {
-  if (err) {
-    return (
-      <Notice status="ERROR">
-        <h3>Something went wrong 💔</h3>
-        <p>Have you tried to restart the app at '/' ?</p>
-      </Notice>
-    );
-  }
-
   const router = useRouter();
   const [blocks, setBlocks] = useState(fetchedBlocks);
   const [currentBlockId, setCurrentBlockId] = useState(null);
@@ -91,6 +82,15 @@ const EditablePage = ({ id, fetchedBlocks, err }) => {
       }
     }
   }, [blocks, prevBlocks, currentBlockId]);
+
+  if (err) {
+    return (
+      <Notice status="ERROR">
+        <h3>Something went wrong 💔</h3>
+        <p>Have you tried to restart the app at '/' ?</p>
+      </Notice>
+    );
+  }
 
   const deleteImageOnServer = async (imageUrl) => {
     // The imageUrl contains images/name.jpg, hence we do not need

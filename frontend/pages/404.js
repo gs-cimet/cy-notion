@@ -1,6 +1,8 @@
+import { useRouter } from "next/router";
 import Notice from "../components/notice";
 
 const NotFoundPage = () => {
+  const router = useRouter();
   return (
     <Notice>
       <h3>404 Not Found</h3>
